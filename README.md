@@ -1,5 +1,5 @@
-## example de programme en symfony
-Utilisation du tutoriel de https://www.youtube.com/watch?v=UTusmVpwJXo
+## example de programme en symfony 6
+Utilisation de tutoriel
 
 ## Utilisation de l'IDE Visual Studio Code
 ### Extensions rajoutées
