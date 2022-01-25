@@ -22,15 +22,11 @@ class FirstController extends AbstractController
     public function sayHello(): Response
     {
         $rand = rand(0,10);
-        $value = 0;
         if ( $rand % 2) {
+            // redirection au niveau de l url
             return $this->redirectToRoute('first');
         }
-        return $this->render('first/hello.html.twig', [
-            'controller_name' => 'FirstController',
-            'firstname' => 'zezez',
-            'lastname' => 'jjjj',
-            'random' => $value
-        ]);
+        //garder url mais utiliser la fonction index
+        return $this->forward('App\Controller\FirstController::index');
     }
 }
