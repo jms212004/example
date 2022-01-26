@@ -16,17 +16,47 @@ class TodoController extends AbstractController
         $session = $request->getSession();
         // Afficher notre tableau de todo
         //si initialisation
-        if ($session->has('todos')) {
+        if (!$session->has('todos')) {
             $todos = [
                 'achat'=> 'acheter clé usb',
                 'cours' => 'Finalisation du cours',
                 'correction' => 'correction mes examens'
             ];
+            
+            //placer ce tableau en session 
+            $session->set('todos',$todos);
         }
-        //placer ce tableau en session 
-        $session->set('todos',$todos);
+        
+        // afficher message temporaire
+        $this->addFlash('info',"La liste des todos vient d' être inialisée");
 
         // else mon tableau de todo dans ma session que je vais afficher
         return $this->render('todo/index.html.twig');
+    }
+
+    #[Route('/todo/add/{name}/{content}', name: 'todo.add')]
+    public function addTodo(Request $request,$name, $content)
+    {
+        $session = $request->getSession();
+        // verifier si il y a un tableau de todo en session
+        if ($session->has('todos')) {
+            //verifier si on a deja un todo du meme nom
+            $todos = $session->get('todos');
+            if (isset($todos[$name])) {
+                //message car todo existe deja
+                $this->addFlash('error',"Le todo $name existe déjà");
+            } else {
+                //rajouter dans le todo
+                $todos[$name] = $content;
+                $session->set('todos',$todos);
+                $this->addFlash('success',"Le todo $name a été rajouté");
+            }
+        } else {
+            // afficher une erreur et faire une redirection vers le controleur index
+            $this->addFlash('error',"La liste n'est pas encore inialisée");
+        }
+
+        return $this->redirectToRoute('todo');
+
     }
 }
