@@ -11,4 +11,10 @@ https://www.osradar.com/install-symfony-ubuntu-20-04/
  ## Commandes Symfony
  $ php bin/console make:controller
  > BlogController
+
+## boostrap (https://www.npmjs.com/package/bootstrap)
+### https://getbootstrap.com/docs/5.1/components/
+> mkdir public/assets
+$../public> npm init
+$> npm i bootstrap
  
