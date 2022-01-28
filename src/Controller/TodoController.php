@@ -39,7 +39,11 @@ class TodoController extends AbstractController
         return $this->render('todo/index.html.twig');
     }
 
-    #[Route('/add/{name}/{content}', name: 'todo.add')]
+    #[Route(
+        '/add/{name}/{content}', 
+        name: 'todo.add',
+        defaults: ['content'=> 'Valeur par défaut à prendre']
+        )]
     public function addTodo(Request $request,$name, $content):RedirectResponse
     {
         $session = $request->getSession();
