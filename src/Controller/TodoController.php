@@ -42,7 +42,7 @@ class TodoController extends AbstractController
     #[Route(
         '/add/{name}/{content}', 
         name: 'todo.add',
-        defaults: ['content'=> 'Valeur par défaut à prendre']
+        defaults: ['name'=> 'nameDefaut','content'=> 'Valeur par défaut à prendre']
         )]
     public function addTodo(Request $request,$name, $content):RedirectResponse
     {
