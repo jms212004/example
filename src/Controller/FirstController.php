@@ -26,7 +26,7 @@ class FirstController extends AbstractController
         return $this->render('first/hello.html.twig', [
             'controller_name' => 'FirstController',
             'firstname' => $firstname,
-            'lastname' => $lastname
+            'lastname' => $lastname,
         ]);
     }
 
