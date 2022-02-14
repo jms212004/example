@@ -64,7 +64,7 @@ class TodoController extends AbstractController
             // afficher une erreur et faire une redirection vers le controleur index
             $this->addFlash('error',"La liste n'est pas encore inialisée");
         }
-
+        
         return $this->redirectToRoute('todo');
     }
 
