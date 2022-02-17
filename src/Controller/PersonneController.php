@@ -8,18 +8,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('personne')]
+
 class PersonneController extends AbstractController
 {
-    #[Route('/personne/add', name: 'personne.add')]
+    #[Route('/', name: 'personne.list')]
+    public function index(ManagerRegistry $doctrine): Response
+    {
+        $repository = $doctrine->getRepository(Personne::class);
+
+        $personnes = $repository->findAll();
+
+        return $this->render('personne/index.html.twig', [
+            'personnes' => $personnes
+        ]);
+    
+    }
+    
+    #[Route('/add', name: 'personne.add')]
     public function addPersonne(ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
         
         //rajouter des informations en BDD
         $personne = new Personne();
-        $personne->setFirstname('JM');
-        $personne->setName('JMS');
-        $personne->setAge('50');
+        $personne->setFirstname('JM2');
+        $personne->setName('JMS2');
+        $personne->setAge('51');
 
 
         // ajouter operation insertion de la personne dans la transaction
