@@ -25,7 +25,7 @@ class PersonneController extends AbstractController
     
     }
 
-    #[Route('/{id<\d+>}', name: 'personne.detail')]
+    /*#[Route('/{id<\d+>}', name: 'personne.detail')]
     public function detail($id,ManagerRegistry $doctrine): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
@@ -41,7 +41,25 @@ class PersonneController extends AbstractController
             'personne' => $personne
         ]);
     
+    }*/
+
+    /**
+     * Version light de la méthode ci dessus
+     */
+    #[Route('/{id<\d+>}', name: 'personne.detail')]
+    public function detail(Personne $personne): Response
+    {
+        if (!$personne) {
+            $this->addFlash('error',"La personne n'existe pas");
+            return $this->redirectToRoute('personne.list');
+        }
+
+        return $this->render('personne/detail.html.twig', [
+            'personne' => $personne
+        ]);
+    
     }
+
     
     #[Route('/add', name: 'personne.add')]
     public function addPersonne(ManagerRegistry $doctrine): Response
