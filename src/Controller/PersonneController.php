@@ -25,27 +25,7 @@ class PersonneController extends AbstractController
     
     }
 
-    /*#[Route('/{id<\d+>}', name: 'personne.detail')]
-    public function detail($id,ManagerRegistry $doctrine): Response
-    {
-        $repository = $doctrine->getRepository(Personne::class);
-        
-        $personne = $repository->find($id);
-
-        if (!$personne) {
-            $this->addFlash('error',"La personne n'existe pas");
-            return $this->redirectToRoute('personne.list');
-        }
-
-        return $this->render('personne/detail.html.twig', [
-            'personne' => $personne
-        ]);
     
-    }*/
-
-    /**
-     * Version light de la méthode ci dessus
-     */
     #[Route('/{id<\d+>}', name: 'personne.detail')]
     public function detail(Personne $personne): Response
     {
@@ -68,17 +48,26 @@ class PersonneController extends AbstractController
         
         //rajouter des informations en BDD
         $personne = new Personne();
-        $personne->setFirstname('JM2');
-        $personne->setName('JMS2');
-        $personne->setAge('51');
 
+        // creation d une personne aléatoirement
+        $i = rand(0,200);
 
+        // inialisation des variables
+        $firstname = 'firstname'.$i;
+        $name = 'name'.$i;
+        $age = $i;
+        
+        $personne->setFirstname($firstname);
+        $personne->setName($name);
+        $personne->setAge($age);
+            
         // ajouter operation insertion de la personne dans la transaction
         $entityManager->persist($personne);
-
-        //execution de la transaction
+        //execution de la transaction vers la BDD (execute)
         $entityManager->flush();
+        
 
+        // affichage des informations dans la page detail
         return $this->render('personne/detail.html.twig', [
             'personne' => $personne
         ]);
