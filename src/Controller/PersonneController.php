@@ -27,7 +27,7 @@ class PersonneController extends AbstractController
 
     
     #[Route('/{id<\d+>}', name: 'personne.detail')]
-    public function detail(Personne $personne): Response
+    public function detail(Personne $personne = null): Response
     {
         if (!$personne) {
             $this->addFlash('error',"La personne n'existe pas");
