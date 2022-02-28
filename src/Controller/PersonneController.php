@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Personne;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 //factoriser l uri
@@ -25,8 +26,7 @@ class PersonneController extends AbstractController
     
     }
 
-
-    #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
+    #[Route('/alls/{page<\d+>?1}/{nbre<\d+>?12}', name: 'personne.list.alls')]
     public function indexAlls(ManagerRegistry $doctrine,$page,$nbre): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
@@ -115,5 +115,23 @@ class PersonneController extends AbstractController
         return $this->render('personne/detail.html.twig', [
             'personne' => $personne
         ]);
+    }
+
+    #[Route('/delete/{id}', name: 'personne.delete')]
+    public function deletePersonne(Personne $personne = null, ManagerRegistry $doctrine):RedirectResponse {
+        // Récupérer la personne
+        if ($personne) {
+            // Si la personne existe => le supprimer et retourner un flashMessage de succés
+            $manager = $doctrine->getManager();
+            // Ajoute la fonction de suppression dans la transaction
+            $manager->remove($personne);
+            // Exécuter la transacition
+            $manager->flush();
+            $this->addFlash('success', "La personne a été supprimé avec succès");
+        } else {
+            //Sinon  retourner un flashMessage d'erreur
+            $this->addFlash('error', "Personne inexistante");
+        }
+        return $this->redirectToRoute('personne.list.alls');
     }
 }
