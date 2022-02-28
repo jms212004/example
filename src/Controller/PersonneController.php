@@ -25,6 +25,32 @@ class PersonneController extends AbstractController
     
     }
 
+
+    #[Route('/alls', name: 'personne.list.alls')]
+    public function indexAlls(ManagerRegistry $doctrine): Response
+    {
+        $repository = $doctrine->getRepository(Personne::class);
+
+        //afficher uniquement l id 410
+        //$personnes = $repository->findBy(['id'=>'410']);
+        //zfficher les personnes avec le prénom correspondant
+        //$personnes = $repository->findBy(['firstname'=>'Honoré']);
+
+        //afficher les personnes avec le prenom correspondant et trier par date
+        //$personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC']);
+
+        //afficher les personnes avec le prenom correspondant et trier par date et limite à 2
+        //$personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC'],2);
+
+        //afficher les personnes avec le prenom correspondant et trier par date et limite à 2 et commencer au deuxieme
+        $personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC'],2,2);
+
+        return $this->render('personne/index.html.twig', [
+            'personnes' => $personnes
+        ]);
+    
+    }
+
     
     #[Route('/{id<\d+>}', name: 'personne.detail')]
     public function detail(Personne $personne = null): Response
