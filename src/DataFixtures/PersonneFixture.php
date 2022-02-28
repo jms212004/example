@@ -12,6 +12,7 @@ class PersonneFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+        
         for ($i=0; $i < 100; $i++) {
             $personne = new Personne();
             $personne->setFirstname($faker->firstName);
