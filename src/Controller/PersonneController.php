@@ -7,7 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+//factoriser l uri
 #[Route('personne')]
 
 class PersonneController extends AbstractController
@@ -26,8 +26,8 @@ class PersonneController extends AbstractController
     }
 
 
-    #[Route('/alls', name: 'personne.list.alls')]
-    public function indexAlls(ManagerRegistry $doctrine): Response
+    #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
+    public function indexAlls(ManagerRegistry $doctrine,$page,$nbre): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
 
@@ -43,7 +43,11 @@ class PersonneController extends AbstractController
         //$personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC'],2);
 
         //afficher les personnes avec le prenom correspondant et trier par date et limite à 2 et commencer au deuxieme
-        $personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC'],2,2);
+        //$personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC'],$nbre,2);
+
+    
+        $personnes = $repository->findBy([],[],$nbre,($page-1) * $nbre);
+
 
         return $this->render('personne/index.html.twig', [
             'personnes' => $personnes
