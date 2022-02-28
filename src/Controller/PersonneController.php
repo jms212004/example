@@ -30,6 +30,16 @@ class PersonneController extends AbstractController
     public function indexAlls(ManagerRegistry $doctrine,$page,$nbre): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
+        $arrayCritereFiltre = array();
+        $arrayCritereOrderBy = array();
+        //exemple de filtre 
+        //$arrayCritereFiltre = array('firstname'=>'Honoré');
+        //$arrayCritereOrderBy = array('age' => 'ASC');
+
+        $offset = ($page-1) * $nbre;//commencer au numero ?
+        $limit = $nbre;
+        $nbreDePersonne = $repository->count($arrayCritereFiltre);
+        $nbreDePage = ceil($nbreDePersonne / $nbre);
 
         //afficher uniquement l id 410
         //$personnes = $repository->findBy(['id'=>'410']);
@@ -45,12 +55,16 @@ class PersonneController extends AbstractController
         //afficher les personnes avec le prenom correspondant et trier par date et limite à 2 et commencer au deuxieme
         //$personnes = $repository->findBy(['firstname'=>'Honoré'],['age' => 'ASC'],$nbre,2);
 
-    
-        $personnes = $repository->findBy([],[],$nbre,($page-1) * $nbre);
+        
+        $personnes = $repository->findBy($arrayCritereFiltre,$arrayCritereOrderBy,$limit,$offset);
 
 
         return $this->render('personne/index.html.twig', [
-            'personnes' => $personnes
+            'personnes' => $personnes,
+            'isPaginated' => TRUE,//faire apparaitre la pagination
+            'nbrePage' => $nbreDePage,
+            'page' => $page,
+            'nbre' => $nbre
         ]);
     
     }
