@@ -37,6 +37,11 @@ class Profile
         return $this->url;
     }
 
+    public function __toString(): string
+    {
+        return $this->rs. " " .$this->url;
+    }
+
     public function setUrl(string $url): self
     {
         $this->url = $url;

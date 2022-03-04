@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\PersonneType;
+
 //factoriser l uri
 #[Route('personne')]
 
@@ -117,30 +119,14 @@ class PersonneController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         
-        //rajouter des informations en BDD
         $personne = new Personne();
 
-        // creation d une personne aléatoirement
-        $i = rand(0,200);
-
-        // inialisation des variables
-        $firstname = 'firstname'.$i;
-        $name = 'name'.$i;
-        $age = $i;
-        
-        $personne->setFirstname($firstname);
-        $personne->setName($name);
-        $personne->setAge($age);
-            
-        // ajouter operation insertion de la personne dans la transaction
-        $entityManager->persist($personne);
-        //execution de la transaction vers la BDD (execute)
-        $entityManager->flush();
+        $form = $this->createForm(PersonneType::class, $personne);
         
 
         // affichage des informations dans la page detail
-        return $this->render('personne/detail.html.twig', [
-            'personne' => $personne
+        return $this->render('personne/add-personne.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 
