@@ -162,14 +162,10 @@ class Personne
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     *
-     * @return void
-     */
+    #[ORM\PrePersist]
     public function onPrePersist() {
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->createdAt = new \DateTime('NOW');
+        $this->updatedAt = new \DateTime('NOW');
     }
 
 
