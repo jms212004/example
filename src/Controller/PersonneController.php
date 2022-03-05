@@ -118,15 +118,19 @@ class PersonneController extends AbstractController
     public function addPersonne(ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
-        
-        $personne = new Personne();
 
-        $form = $this->createForm(PersonneType::class, $personne);
+        // instancier la classe personne
+        $personne = new Personne();
         
+        // creation des champs du formulaire a partir de la classe personne
+        $form = $this->createForm(PersonneType::class, $personne);
+        //ne pas afficher certains champs (connu dans la classe personnne)
+        $form->remove('createdAt');
+        $form->remove('updatedAt');
 
         // affichage des informations dans la page detail
         return $this->render('personne/add-personne.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView()//view
         ]);
     }
 
