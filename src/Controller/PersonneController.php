@@ -7,6 +7,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\PersonneType;
 
@@ -104,7 +105,7 @@ class PersonneController extends AbstractController
     {
         if (!$personne) {
             $this->addFlash('error',"La personne n'existe pas");
-            return $this->redirectToRoute('personne.list');
+            return $this->redirectToRoute('personne.list.alls');
         }
 
         return $this->render('personne/detail.html.twig', [
@@ -115,10 +116,8 @@ class PersonneController extends AbstractController
 
     
     #[Route('/add', name: 'personne.add')]
-    public function addPersonne(ManagerRegistry $doctrine): Response
+    public function addPersonne(ManagerRegistry $doctrine, Request $request ): Response
     {
-        $entityManager = $doctrine->getManager();
-
         // instancier la classe personne
         $personne = new Personne();
         
@@ -128,10 +127,33 @@ class PersonneController extends AbstractController
         $form->remove('createdAt');
         $form->remove('updatedAt');
 
-        // affichage des informations dans la page detail
-        return $this->render('personne/add-personne.html.twig', [
-            'form' => $form->createView()//view
-        ]);
+        // Mon formulaire va  traiter la requete
+        $form->handleRequest($request);
+
+        //Est ce que le formulaire a été soumis
+        if($form->isSubmitted()) {
+            // si oui,
+                // on va ajouter l'objet personne dans la base de données
+                $manager = $doctrine->getManager();
+                $manager->persist($personne);
+                $manager->flush();
+
+                // Afficher un mssage de succès
+                $message = " a été mis à jour avec succès";
+                $this->addFlash('success',$personne->getName(). $message );
+                
+                // Rediriger verts la liste des personne
+                return $this->redirectToRoute('personne.alls');
+
+            } else {
+                //sinon 
+            //On affiche notre formulaire
+
+            // affichage des informations dans la page detail
+            return $this->render('personne/add-personne.html.twig', [
+                'form' => $form->createView()//view
+            ]);
+        }
     }
 
     #[Route('/delete/{id}', name: 'personne.delete')]
