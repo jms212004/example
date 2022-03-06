@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Personne;
 use App\Entity\Profile;
 use App\Entity\Hobby;
+use App\Entity\Job;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +26,12 @@ class PersonneType extends AbstractType
             ->add('profile', EntityType::class, [
                 'expanded' => true,
                 'class' => Profile::class,
-                'multiple' => false]
+                'multiple' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.rs', 'ASC');
+                }
+                ]
             )
             ->add('hobbies', EntityType::class, [
                 'expanded' => false,
@@ -36,7 +42,14 @@ class PersonneType extends AbstractType
                         ->orderBy('h.designation', 'ASC');
                 }
             ])
-            ->add('job')
+            ->add('job', EntityType::class, [
+                'required' => false,
+                'class' => Job::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('j')
+                        ->orderBy('j.designation', 'ASC');
+                }
+            ])
             ->add('editer', SubmitType::class)
         ;
     }
