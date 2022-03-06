@@ -12,12 +12,12 @@ trait TimeStampTrait
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(?\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -38,14 +38,14 @@ trait TimeStampTrait
 
     #[ORM\PrePersist]
     public function onPrePersist() {
-        $this->createdAt = new \DateTime('NOW');
-        $this->updatedAt = new \DateTime('NOW');
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
 
     #[ORM\PreUpdate]
     public function onPreUpdate() {
-        $this->updatedAt = new \DateTime('NOW');
+        $this->updatedAt = new \DateTime();
     }
 
 }

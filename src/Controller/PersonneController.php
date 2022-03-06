@@ -114,12 +114,26 @@ class PersonneController extends AbstractController
     
     }
 
-    
-    #[Route('/add', name: 'personne.add')]
-    public function addPersonne(ManagerRegistry $doctrine, Request $request ): Response
+    /**
+     * Methode addPersonne
+     * Permet d'éditer ou d ajouter une personne
+     */
+    #[Route('/edit/{id?0}', name: 'personne.edit')]
+    public function addPersonne(
+        Personne $personne = null,
+        ManagerRegistry $doctrine,
+        Request $request,): Response
     {
-        // instancier la classe personne
-        $personne = new Personne();
+        // initialisation du texte du message a afficher
+        $message = " a été mis à jour avec succès";
+        
+        // si id retourné ne remonter aucun personne de la bDD
+        //alors on considère la création d'un personne
+        if (!$personne) {
+            // instancier la classe personne
+            $personne = new Personne();
+            $message = " a été créé avec succès";
+        }
         
         // creation des champs du formulaire a partir de la classe personne
         $form = $this->createForm(PersonneType::class, $personne);
@@ -139,11 +153,10 @@ class PersonneController extends AbstractController
                 $manager->flush();
 
                 // Afficher un mssage de succès
-                $message = " a été mis à jour avec succès";
                 $this->addFlash('success',$personne->getName(). $message );
                 
                 // Rediriger verts la liste des personne
-                return $this->redirectToRoute('personne.alls');
+                return $this->redirectToRoute('personne.list.alls');
 
             } else {
                 //sinon 
