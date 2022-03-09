@@ -149,8 +149,8 @@ class PersonneController extends AbstractController
         // Mon formulaire va  traiter la requete
         $form->handleRequest($request);
 
-        //Est ce que le formulaire a été soumis
-        if($form->isSubmitted()) {
+        //Est ce que le formulaire a été soumis et valide
+        if($form->isSubmitted() && $form->isValid()) {
             // si oui,
                 // traiter le depot d un fichier
                 $photo = $form->get('photo')->getData();//recuperation de  la photo
