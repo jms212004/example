@@ -24,10 +24,12 @@ class Personne
 
     #[ORM\Column(type: 'string', length: 50)]
     #[Assert\NotBlank(message: 'Veuillez renseigner ce champ')]
-    #[Assert\Length(min: 4,max: 32, minMessage: 'Veuillez saisir au moins 4 caractères',maxMessage: 'Veuillez saisir max 32 caractères')]
+    #[Assert\Length(min: 4,max: 32, minMessage: 'Veuillez saisir au moins 1 caractère',maxMessage: 'Veuillez saisir max 50 caractères')]
     private $firstname;
 
     #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\NotBlank(message: 'Veuillez renseigner ce champ')]
+    #[Assert\Length(min: 4,max: 32, minMessage: 'Veuillez saisir au moins 1 caractère',maxMessage: 'Veuillez saisir max 50 caractères')]
     private $name;
 
     #[ORM\Column(type: 'smallint')]
