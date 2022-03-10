@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
-use App\Service\UploaderService;
+
 
 class PersonneType extends AbstractType
 {
@@ -27,13 +27,12 @@ class PersonneType extends AbstractType
             ->add('createdAt')
             ->add('updatedAt')
             ->add('profile', EntityType::class, [
-                'expanded' => true,
+                'expanded' => false,
+                'required' => false,
+                'attr' => [
+                    'class' => 'js-example-basic-multiple'
+                ],
                 'class' => Profile::class,
-                'multiple' => false,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('p')
-                        ->orderBy('p.rs', 'ASC');
-                }
                 ]
             )
             ->add('hobbies', EntityType::class, [
@@ -47,6 +46,7 @@ class PersonneType extends AbstractType
             ])
             ->add('job', EntityType::class, [
                 'required' => false,
+                'multiple' => false,
                 'class' => Job::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('j')
