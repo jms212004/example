@@ -29,20 +29,25 @@ class PersonneType extends AbstractType
             ->add('profile', EntityType::class, [
                 'expanded' => false,
                 'required' => false,
-                'attr' => [
-                    'class' => 'js-example-basic-multiple'
-                ],
                 'class' => Profile::class,
+                'multiple' => false,
+                'attr' => [
+                    'class' => 'select2'
                 ]
-            )
+            ])
             ->add('hobbies', EntityType::class, [
                 'expanded' => false,
                 'class' => Hobby::class,
                 'multiple' => true,
+                'required' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('h')
                         ->orderBy('h.designation', 'ASC');
-                }
+                },
+                'choice_label' => 'designation',
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
             ->add('job', EntityType::class, [
                 'required' => false,
