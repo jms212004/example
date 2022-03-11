@@ -17,4 +17,7 @@ https://www.osradar.com/install-symfony-ubuntu-20-04/
 > mkdir public/assets
 $../public> npm init
 $> npm i bootstrap
+
+## config gmail
+https://www.google.com/settings/security/lesssecureapps
  

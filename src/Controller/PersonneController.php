@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\PersonneType;
+use App\Service\MailerService;
 use App\Service\UploaderService;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -127,7 +128,8 @@ class PersonneController extends AbstractController
         Personne $personne = null,
         ManagerRegistry $doctrine,
         Request $request,
-        UploaderService $uploaderService
+        UploaderService $uploaderService,
+        MailerService $mailer
         ): Response
     {
         // initialisation du texte du message a afficher
@@ -169,6 +171,9 @@ class PersonneController extends AbstractController
 
                 // Afficher un mssage de succès
                 $this->addFlash('success',$personne->getName(). $message );
+
+                //envoyer un courriel
+                $mailer->sendEmail(content: 'jkjlfdgf@jfkdsldf.fr');
                 
                 // Rediriger verts la liste des personne
                 return $this->redirectToRoute('personne.list.alls');
