@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\PersonneType;
+use App\Service\UploaderService;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -126,7 +127,7 @@ class PersonneController extends AbstractController
         Personne $personne = null,
         ManagerRegistry $doctrine,
         Request $request,
-        SluggerInterface $slugger
+        UploaderService $uploaderService
         ): Response
     {
         // initialisation du texte du message a afficher
@@ -156,21 +157,9 @@ class PersonneController extends AbstractController
                 $photo = $form->get('photo')->getData();//recuperation de  la photo
                 // this condition is needed because the 'brochure' field is not required
                 // so the PDF file must be processed only when a file is uploaded
-                if ($photo) {//si quelque chose alors traiter
-                    $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                    // this is needed to safely include the file name as part of the URL
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
-
-                    // Move the file to the directory where brochures are stored
-                    try {
-                        $photo->move(
-                            $this->getParameter('personne_directory'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
-                    }
+                if ($photo) {
+                    $directory = $this->getParameter('personne_directory');
+                    $personne->setImage($uploaderService->uploadFile($photo, $directory));
                 }
                 
                 // on va ajouter l'objet personne dans la base de données
