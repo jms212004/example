@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\PersonneType;
 use App\Service\MailerService;
 use App\Service\UploaderService;
+use App\Service\PdfService;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -32,6 +33,13 @@ class PersonneController extends AbstractController
             'personnes' => $personnes
         ]);
     
+    }
+
+
+    #[Route('/pdf/{id}', name: 'personne.pdf')]
+    public function generatePdfPersonne(Personne $personne = null, PdfService $pdf) {
+        $html = $this->render('personne/detail.html.twig', ['personne' => $personne]);
+        $pdf->showPdfFile($html);
     }
 
     #[Route('/alls/age/{ageMin}/{ageMax}', name: 'personne.list.age')]
