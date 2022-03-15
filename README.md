@@ -74,5 +74,6 @@ composer require theofidry/alice-data-fixtures --dev
 composer require fzaninotto/faker
 composer require fakerphp/faker
 composer require dompdf/dompdf
+composer require security
 
  
