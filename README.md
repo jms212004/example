@@ -76,4 +76,6 @@ composer require fakerphp/faker
 composer require dompdf/dompdf
 composer require security
 
+
+symfony console doctrine:fixtures:load --group=user --append
  
