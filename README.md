@@ -78,4 +78,5 @@ composer require security
 
 
 symfony console doctrine:fixtures:load --group=user --append
- 
+## connaitre les variables pour la configuration securite
+symfony console debug:config security
