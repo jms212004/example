@@ -13,17 +13,24 @@ use App\Form\PersonneType;
 use App\Service\MailerService;
 use App\Service\UploaderService;
 use App\Service\PdfService;
+use App\Service\HelpersService;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Security;
+use Psr\Log\LoggerInterface;
 
 //factoriser l uri
 #[Route('personne')]
 
 class PersonneController extends AbstractController
 {
-    
+    public function __construct(
+        private LoggerInterface $logger,
+        private HelpersService $helper,
+    )
+    {}
+
     #[Route('/', name: 'personne.list')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -139,7 +146,8 @@ class PersonneController extends AbstractController
         ManagerRegistry $doctrine,
         Request $request,
         UploaderService $uploaderService,
-        MailerService $mailer
+        MailerService $mailer,
+        HelpersService $helpers
         ): Response
     {
         // initialisation du texte du message a afficher
@@ -151,7 +159,7 @@ class PersonneController extends AbstractController
             // instancier la classe personne
             $personne = new Personne();
             $message = " a été créé avec succès";
-            $personne->setCreatedBy($mailer->getUser);
+            $personne->setCreatedBy($helpers->getUser);
         }
         
         // creation des champs du formulaire a partir de la classe personne
