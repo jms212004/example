@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Security;
 
-
-use App\Service\Helpers;
-
 //factoriser l uri
 #[Route('personne')]
 
@@ -142,8 +139,7 @@ class PersonneController extends AbstractController
         ManagerRegistry $doctrine,
         Request $request,
         UploaderService $uploaderService,
-        MailerService $mailer,
-        Security $security
+        MailerService $mailer
         ): Response
     {
         // initialisation du texte du message a afficher
@@ -155,8 +151,7 @@ class PersonneController extends AbstractController
             // instancier la classe personne
             $personne = new Personne();
             $message = " a été créé avec succès";
-            $user = $security->getUser();
-            $personne->setCreatedBy($user);
+            $personne->setCreatedBy($mailer->getUser);
         }
         
         // creation des champs du formulaire a partir de la classe personne

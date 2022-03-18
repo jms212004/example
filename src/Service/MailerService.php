@@ -32,4 +32,12 @@ class MailerService
 
             $this->mailer->send($email);
     }
+    public function getUser(): User {
+        //if($this->security->isGranted('ROLE_ADMIN')) {
+            $user = $this->security->getUser();
+          //  if ($user instanceof User) {
+                return $user;
+           // }
+        //}
+    }
 }
