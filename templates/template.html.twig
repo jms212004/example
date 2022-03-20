@@ -101,7 +101,11 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                        {% if app.user %}
+                            {{ app.user.email }}
+                        {% else %}
+                            Anonymous
+                        {% endif %}
                     </div>
                 </nav>
             </div>
