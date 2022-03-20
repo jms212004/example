@@ -152,8 +152,6 @@ class PersonneController extends AbstractController
         // initialisation du texte du message a afficher
         $message = " a été mis à jour avec succès";
         $newPersonne = false;
-        echo ($this->helpers->sayCc());
-        //dd($this->helpers->getUser());
         // si id retourné ne remonter aucun personne de la bDD
         //alors on considère la création d'un personne
         if (!$personne) {

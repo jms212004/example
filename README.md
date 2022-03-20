@@ -74,9 +74,14 @@ composer require theofidry/alice-data-fixtures --dev
 composer require fzaninotto/faker
 composer require fakerphp/faker
 composer require dompdf/dompdf
+
+
+## securite
 composer require security
-
-
+symfony console make:user
+symfony console make:auth
 symfony console doctrine:fixtures:load --group=user --append
-## connaitre les variables pour la configuration securite
 symfony console debug:config security
+
+## securité : enregistrer un user
+symfony console make:registration-form
