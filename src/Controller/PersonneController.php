@@ -27,7 +27,7 @@ class PersonneController extends AbstractController
 {
     public function __construct(
         private LoggerInterface $logger,
-        private HelpersService $helper,
+        private HelpersService $helpers,
     )
     {}
 
@@ -147,19 +147,20 @@ class PersonneController extends AbstractController
         Request $request,
         UploaderService $uploaderService,
         MailerService $mailer,
-        HelpersService $helpers
         ): Response
     {
         // initialisation du texte du message a afficher
         $message = " a été mis à jour avec succès";
-        
+        $newPersonne = false;
+        echo ($this->helpers->sayCc());
+        //dd($this->helpers->getUser());
         // si id retourné ne remonter aucun personne de la bDD
         //alors on considère la création d'un personne
         if (!$personne) {
+            $newPersonne = true;
             // instancier la classe personne
             $personne = new Personne();
-            $message = " a été créé avec succès";
-            $personne->setCreatedBy($helpers->getUser);
+            
         }
         
         // creation des champs du formulaire a partir de la classe personne
@@ -182,6 +183,11 @@ class PersonneController extends AbstractController
                     $directory = $this->getParameter('personne_directory');
                     $personne->setImage($uploaderService->uploadFile($photo, $directory));
                 }
+                if ($newPersonne) {
+                    $message = " a été créé avec succès";
+                    $personne->setCreatedBy($this->getUser());
+                    //dd($helpers->getUser);
+                }
                 
                 // on va ajouter l'objet personne dans la base de données
                 $manager = $doctrine->getManager();
@@ -190,6 +196,9 @@ class PersonneController extends AbstractController
 
                 // Afficher un mssage de succès
                 $this->addFlash('success',$personne->getName(). $message );
+                
+                //log
+                $this->logger->info('success ' .$personne->getName(). $message);
 
                 //envoyer un courriel
                 $mailer->sendEmail(content: '<p>See Twig integration for better HTML integration!</p>');

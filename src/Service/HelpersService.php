@@ -17,6 +17,9 @@ class HelpersService
     }
 
     public function getUser(): User {
-            return $this->security->getUser();
+        $user = $this->security->getUser();
+        if ($user instanceof User) {
+            return $user;
+        }
     }
 }
