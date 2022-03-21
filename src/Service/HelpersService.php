@@ -17,9 +17,12 @@ class HelpersService
     }
 
     public function getUser(): User {
-        $user = $this->security->getUser();
-        if ($user instanceof User) {
-            return $user;
+        //donne acces uniquement a un role
+        if($this->security->isGranted('ROLE_ADMIN')) {
+            $user = $this->security->getUser();
+            if ($user instanceof User) {
+                return $user;
+            }
         }
     }
 }

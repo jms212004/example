@@ -78,7 +78,7 @@ class PersonneController extends AbstractController
     }
 
 
-    #[Route('/alls/{page<\d+>?1}/{nbre<\d+>?12}', name: 'personne.list.alls')]
+    #[Route('/alls/{page?1}/{nbre?12}', name: 'personne.list.alls')]
     public function indexAlls(ManagerRegistry $doctrine,$page,$nbre): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
@@ -87,7 +87,10 @@ class PersonneController extends AbstractController
         //exemple de filtre 
         //$arrayCritereFiltre = array('firstname'=>'Honoré');
         //$arrayCritereOrderBy = array('age' => 'ASC');
-
+        
+        // droit acces uniquement a admin
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        
         $offset = ($page-1) * $nbre;//commencer au numero ?
         $limit = $nbre;
         $nbreDePersonne = $repository->count($arrayCritereFiltre);
@@ -149,6 +152,8 @@ class PersonneController extends AbstractController
         MailerService $mailer,
         ): Response
     {
+        // droit acces uniquement a admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // initialisation du texte du message a afficher
         $message = " a été mis à jour avec succès";
         $newPersonne = false;
