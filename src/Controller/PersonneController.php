@@ -20,8 +20,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Security;
 use Psr\Log\LoggerInterface;
 
-//factoriser l uri
-#[Route('personne')]
+//factoriser l uri et limiter acces au role pour tout le controler
+#[
+    Route('personne'),
+    IsGranted("ROLE_USER")]
 
 class PersonneController extends AbstractController
 {
@@ -222,6 +224,8 @@ class PersonneController extends AbstractController
 
     #[Route('/delete/{id}', name: 'personne.delete')]
     public function deletePersonne(Personne $personne = null, ManagerRegistry $doctrine):RedirectResponse {
+        // droit acces uniquement a admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // Récupérer la personne
         if ($personne) {
             // Si la personne existe => le supprimer et retourner un flashMessage de succés
