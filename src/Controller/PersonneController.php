@@ -61,7 +61,7 @@ class PersonneController extends AbstractController
     public function personnesByAge(ManagerRegistry $doctrine,$ageMax,$ageMin): Response
     {
         $repository = $doctrine->getRepository(Personne::class);
-
+        
         $stats = $repository->statsPersonnesByAgeInterval($ageMin,$ageMax);
 
         return $this->render('personne/stats.html.twig', [
@@ -102,6 +102,8 @@ class PersonneController extends AbstractController
         $nbreDePersonne = $repository->count($arrayCritereFiltre);
         $nbreDePage = ceil($nbreDePersonne / $nbre);
 
+        
+
         //afficher uniquement l id 410
         //$personnes = $repository->findBy(['id'=>'410']);
         //zfficher les personnes avec le prénom correspondant
@@ -118,7 +120,9 @@ class PersonneController extends AbstractController
 
         
         $personnes = $repository->findBy($arrayCritereFiltre,$arrayCritereOrderBy,$limit,$offset);
-
+        //events
+        $listAllPersonnesEvents = new ListAllPersonnesEvent(count($personnes));
+        $this->dispatcher->dispatch($listAllPersonnesEvents, ListAllPersonnesEvent::LIST_ALL_PERSONNE_EVENT);
 
         return $this->render('personne/index.html.twig', [
             'personnes' => $personnes,

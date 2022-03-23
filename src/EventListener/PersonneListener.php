@@ -15,7 +15,7 @@ class PersonneListener
         //dd("cc je suis entrain d'écouter l'evenement personne.add et une personne vient d'être ajoutée et c'est ". $event->getPersonne()->getName());
         $this->logger->debug("Events je suis entrain d'écouter l'evenement personne.add et une personne vient d'être ajoutée et c'est ". $event->getPersonne()->getName());
     }
-    /*public function onListAllPersonnes(ListAllPersonnesEvent $event){
+    public function onListAllPersonnes(ListAllPersonnesEvent $event){
         $this->logger->debug("Le nombre de personne dans la base est ". $event->getNbPersonne());
     }
     public function onListAllPersonnes2(ListAllPersonnesEvent $event){
@@ -24,5 +24,5 @@ class PersonneListener
 
     public function logKernelRequest(KernelEvent $event){
         dd($event->getRequest());
-    }*/
+    }
 }
