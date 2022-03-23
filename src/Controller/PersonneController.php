@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Personne;
+use App\Event\AddPersonneEvent;
+use App\Event\ListAllPersonnesEvent;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,6 +17,7 @@ use App\Service\UploaderService;
 use App\Service\PdfService;
 use App\Service\HelpersService;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Security;
@@ -30,6 +33,7 @@ class PersonneController extends AbstractController
     public function __construct(
         private LoggerInterface $logger,
         private HelpersService $helpers,
+        private EventDispatcherInterface $dispatcher
     )
     {}
 
@@ -198,6 +202,14 @@ class PersonneController extends AbstractController
                 $manager = $doctrine->getManager();
                 $manager->persist($personne);
                 $manager->flush();
+
+                // Afficher un mssage de succès
+                if($newPersonne) {
+                    // On a créer notre evenenement
+                    $addPersonneEvent = new AddPersonneEvent($personne);
+                    // On va maintenant dispatcher cet événement
+                    $this->dispatcher->dispatch($addPersonneEvent, AddPersonneEvent::ADD_PERSONNE_EVENT);
+                }
 
                 // Afficher un mssage de succès
                 $this->addFlash('success',$personne->getName(). $message );
