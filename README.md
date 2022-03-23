@@ -1,6 +1,10 @@
 ## example de programme en symfony 6
 Utilisation de tutoriel
 
+## Lancer le serveur en dev symfony
+cd symfony/example/ # correspond au répertoire contenant le projet à lancer
+symfony server:start
+
 ## Utilisation de l'IDE Visual Studio Code
 ### Extensions rajoutées
  ESLint; Git History; Lorem ipsum; MYSQL; PHP Intelephense; Symfony code ...; Twig;Class autocomplete for HTML;
