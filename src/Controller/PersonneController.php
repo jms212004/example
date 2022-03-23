@@ -214,16 +214,17 @@ class PersonneController extends AbstractController
                     // On va maintenant dispatcher cet événement
                     $this->dispatcher->dispatch($addPersonneEvent, AddPersonneEvent::ADD_PERSONNE_EVENT);
                 }
-
                 // Afficher un mssage de succès
                 $this->addFlash('success',$personne->getName(). $message );
-                
+
+                /*
+                * Morceau de code déplacé dans le EventSubscriber
                 //log
                 $this->logger->info('success ' .$personne->getName(). $message);
 
                 //envoyer un courriel
                 $mailer->sendEmail(content: '<p>See Twig integration for better HTML integration!</p>');
-                
+                */
                 // Rediriger verts la liste des personne
                 return $this->redirectToRoute('personne.list.alls');
 
