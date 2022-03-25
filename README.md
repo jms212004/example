@@ -89,3 +89,22 @@ symfony console debug:config security
 
 ## securité : enregistrer un user
 symfony console make:registration-form
+
+
+
+## Installation du projet dans un nouvel espace
+mkdir example3
+git clone https://github.com/jms212004/example.git .
+cp .env .env.local
+   placer les lignes pour la nouvelle bdd (pense à la créer en amont) 
+   et la config pour le mail
+   
+   DATABASE_URL="mysql://<login>:<pwd>@127.0.0.1:3306/example3?serverVersion=mariadb-10.5.15"
+   MAILER_DSN=gmail://<adressemail>:<pwd>@default
+
+composer update
+symfony console make:migration
+php bin/console doctrine:migrations:migrate
+
+### charger des données de test en bdd
+symfony console doctrine:fixtures:load
