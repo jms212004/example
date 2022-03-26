@@ -8,9 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//factoriser l uri et limiter acces au role pour tout le controler
+#[
+    Route('tab'),
+    IsGranted("ROLE_ADMIN")]
 class TabController extends AbstractController
 {
-    #[Route('/tab/{nb<\d+>?5}', name: 'tab')]
+    #[Route('/{nb<\d+>?5}', name: 'tab')]
     public function index($nb): Response
     {
         $notes = [];
@@ -23,7 +27,7 @@ class TabController extends AbstractController
         ]);
     }
 
-    #[Route('/tab/users', name: 'tab.users')]
+    #[Route('/users', name: 'tab.users')]
     public function users(): Response
     {
         $users = [
@@ -37,13 +41,16 @@ class TabController extends AbstractController
     }
 
 
-    #[Route('/tab/utilisateurs', name: 'tab.listuser')]
+    #[Route('/utilisateurs', name: 'tab.listuser')]
     public function utilisateur(ManagerRegistry $doctrine): Response
     {
+        // droit acces uniquement a admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $repository = $doctrine->getRepository(User::class);
 
         $users = $repository->findAll();
-//dd($users);
+
         return $this->render('tab/utilisateurs.html.twig', [
             'users' => $users
         ]);
