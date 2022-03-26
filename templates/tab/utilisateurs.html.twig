@@ -1,0 +1,35 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}
+	Users
+{% endblock %}
+
+{% block PageTitle %}
+	Liste des utilisateurs
+{% endblock %}
+
+
+{% block body %}
+
+
+	<table class="table">
+		<tr class="table-active">
+			<td>id</td>
+			<td>rôle</td>
+			<td>Email</td>
+			<td>Verifer</td>
+		</tr>
+		{% for user in users %}
+			<tr class="table-{% if loop.index is odd %}danger{% else %}warning{% endif %}">
+				<td>{{ user.id }}</td>
+				<td>
+					<ul>{{ user.roles[0] }}</ul>
+				</td>
+				<td>{{ user.email }}</td>
+				<td>
+					{% if user.isVerified %}yes{% else %}no{% endif%}</td>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

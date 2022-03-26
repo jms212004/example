@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,5 +34,19 @@ class TabController extends AbstractController
         return $this->render('tab/users.html.twig', [
             'users' => $users
         ]);
+    }
+
+
+    #[Route('/tab/utilisateurs', name: 'tab.listuser')]
+    public function utilisateur(ManagerRegistry $doctrine): Response
+    {
+        $repository = $doctrine->getRepository(User::class);
+
+        $users = $repository->findAll();
+//dd($users);
+        return $this->render('tab/utilisateurs.html.twig', [
+            'users' => $users
+        ]);
+    
     }
 }
