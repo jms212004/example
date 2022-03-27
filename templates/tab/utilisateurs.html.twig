@@ -14,6 +14,7 @@
 	<table class="table">
 		<tr class="table-active">
 			<td>id</td>
+			<td>name</td>
 			<td>rôle</td>
 			<td>Email</td>
 			<td>Verifer</td>
@@ -21,6 +22,7 @@
 		{% for user in users %}
 			<tr class="table-{% if loop.index is odd %}danger{% else %}warning{% endif %}">
 				<td>{{ user.id }}</td>
+				<td>{{ user.name }}</td>
 				<td>
 					<ul>{{ user.roles[0] }}</ul>
 				</td>

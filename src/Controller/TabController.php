@@ -59,7 +59,7 @@ class TabController extends AbstractController
                 );
 
             // Set their role
-            $user->setRoles(['ROLE_ADMIN']);
+            $user->setRoles(['ROLE_USER']);
 
             //set date update et create
             $now = new DateTimeImmutable();
