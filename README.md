@@ -108,3 +108,34 @@ php bin/console doctrine:migrations:migrate
 
 ### charger des données de test en bdd
 symfony console doctrine:fixtures:load
+
+## creation d un formulaire pour les user (voir vidéo 40)
+symfony console make:form
+Réponses :
+   UserType
+   User
+
+Création dans la classe TabControler de la méthode edit#[Route('/edit/{id?0}', name: 'tab.edit')]
+    +use App\Entity\User;
+    +use App\Form\UserType;
+
+    #[Route('/edit/{id?0}', name: 'tab.edit')]
+    public function addUsers(
+        ManagerRegistry $doctrine
+    ): Response
+    {
+        $manager = $doctrine->getManager();
+
+        // affichage des informations dans la page detail
+        return $this->render('tab/add-utilisateurs.html.twig', [
+            
+        ]);
+    }
+Creation du template add-utilisateurs.html.twig
+
+
+Rajouter la methode dans User.php 
+   public function __toString(): string
+    {
+        return $this->designation;
+    }
