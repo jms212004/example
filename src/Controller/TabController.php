@@ -39,9 +39,19 @@ class TabController extends AbstractController
         Request $request
     ): Response
     {
+        // droit acces uniquement a admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // initialisation du texte du message a afficher
+        $message = " a été mis à jour avec succès";
+        $newUser = false;
+        // si id retourné ne remonter aucun user de la bDD
+        //alors on considère la création d'un user
+        if (!$user) {
+            $newUser = true;
+            // instancier la classe user
+            $user = new User();
+        }
 
-        // instancier la classe personne
-        $user = new User();
 
         // creation des champs du formulaire a partir de la classe personne
         $form = $this->createForm(UserType::class, $user);
@@ -49,6 +59,7 @@ class TabController extends AbstractController
         // Mon formulaire va  traiter la requete
         $form->handleRequest($request);
 
+        //Est ce que le formulaire a été soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -58,18 +69,27 @@ class TabController extends AbstractController
                     )
                 );
 
-            // Set their role
-            $user->setRoles(['ROLE_USER']);
+                //mise à jour de date update et create
+                $now = new DateTimeImmutable();
+                $user->setUpdatedAt($now);
+        
+                if ($newUser) {
+                    $message = " a été créé avec succès";
+                    $user->setCreatedAt($now);
+                }
 
-            //set date update et create
-            $now = new DateTimeImmutable();
-            $user->setUpdatedAt($now);
-            $user->setCreatedAt($now);
+                // affecter le role
+                $user->setRoles(['ROLE_USER']);
 
+            
             // on va ajouter l'objet personne dans la base de données
             $manager = $doctrine->getManager();
             $manager->persist($user);
             $manager->flush();
+
+            // Afficher un mssage de succès
+            $this->addFlash('success',$user->getName(). $message );
+
 
             // Rediriger verts la liste des utilisateurs
             return $this->redirectToRoute('tab.listuser');
