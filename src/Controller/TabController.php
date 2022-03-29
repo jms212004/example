@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Event\AddUserEvent;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use DateTimeImmutable;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 //factoriser l uri et limiter acces au role pour tout le controler
 #[
@@ -18,6 +20,11 @@ use DateTimeImmutable;
     IsGranted("ROLE_ADMIN")]
 class TabController extends AbstractController
 {
+    public function __construct(
+        private EventDispatcherInterface $dispatcher
+    )
+    {}
+
     #[Route('/{nb<\d+>?5}', name: 'tab')]
     public function index($nb): Response
     {
@@ -86,6 +93,14 @@ class TabController extends AbstractController
             $manager = $doctrine->getManager();
             $manager->persist($user);
             $manager->flush();
+
+            // Afficher un mssage de succès
+            if($newUser) {
+                // On a créer notre evenenement
+                $addUserEvent = new AddUserEvent($user);
+                // On va maintenant dispatcher cet événement
+                $this->dispatcher->dispatch($addUserEvent, AddUserEvent::ADD_USER_EVENT);
+            }
 
             // Afficher un mssage de succès
             $this->addFlash('success',$user->getName(). $message );
