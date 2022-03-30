@@ -163,7 +163,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->email. " " .$this->password. " ".$this->roles;
+        return $this->email. " " .$this->password;
     }
 
     public function getName(): ?string

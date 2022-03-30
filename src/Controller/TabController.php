@@ -14,6 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+
 //factoriser l uri et limiter acces au role pour tout le controler
 #[
     Route('tab'),
