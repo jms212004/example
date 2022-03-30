@@ -139,3 +139,9 @@ Rajouter la methode dans User.php
     {
         return $this->designation;
     }
+
+## creation page erreur (fonctionne uniquement en prod)
+- composer require symfony/twig-pack
+- placer dans le fichier .env.local APP_ENV=prod
+- creation des réperoires templates/bundles/TwigBundle/Exception
+mettre la page avec le  code erreur
