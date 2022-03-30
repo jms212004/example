@@ -144,4 +144,7 @@ Rajouter la methode dans User.php
 - composer require symfony/twig-pack
 - placer dans le fichier .env.local APP_ENV=prod
 - creation des réperoires templates/bundles/TwigBundle/Exception
-mettre la page avec le  code erreur
+- mettre la page avec le  code erreur
+
+> Possible d'accéder à cette page en dev alors mettre dans url https://localhost:8000/index.php/_error/403
+
