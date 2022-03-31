@@ -141,6 +141,7 @@ Rajouter la methode dans User.php
     }
 
 ## creation page erreur (fonctionne uniquement en prod) (pense à vider le cache en prod afin de faire des essais)
+### voir https://symfony.com/doc/current/translation.html
 - composer require symfony/twig-pack
 - placer dans le fichier .env.local APP_ENV=prod
 - creation des réperoires templates/bundles/TwigBundle/Exception
@@ -148,3 +149,14 @@ Rajouter la methode dans User.php
 
 > Possible d'accéder à cette page en dev alors mettre dans url https://localhost:8000/index.php/_error/403
 
+## traduction 
+- verifier que le module translation est bien installé
+- traduire dans les templates
+- traduire dans les methodes
+-> si on veut afficher avant de réaliser l action (en partant du principe que 'EN' par défaut voir fichier translation.yaml)
+> php bin/console translation:extract --dump-messages fr
+-> creation des fichiers dans le répertoire translations
+> php bin/console translation:extract --force fr
+-> mettre à jour 
+> php bin/console translation:update --force fr
+(provoque la création des fichiers qui peuvent maintenant être modifiés avec les bons textes)

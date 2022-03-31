@@ -1,11 +1,11 @@
 {% extends 'template.html.twig' %}
 
 {% block PageTitle %}
-	Liste les personnes
+	List people
 {% endblock %}
 
 {% block title %}
-	Liste des personnes en BDD
+	{% trans %} List people in BDD{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -16,7 +16,7 @@
 					<h5 class="card-title">{{ personne.name }}</h5>
 					<h6 class="card-subtitle mb-2 text-muted">{{ personne.firstname }}
 						{{ personne.name }}</h6>
-					<p class="card-text">Age :
+					<p class="card-text">{% trans %}Age{% endtrans %} :
 						{{ personne.age }}.</p>
 					<a href="{{ path('personne.detail',{id:personne.id})}}" class="card-link">
 						<i class="fas fa-info-circle"></i>
@@ -42,7 +42,7 @@
 					{% if page != 1 %}
 						<li class="page-item">
 							<a class="page-link" href="{{ path('personne.list.alls', {page: page - 1, nbre: nbre}) }}">
-								Précédent
+								{% trans %}Previous{% endtrans %}
 							</a>
 						</li>
 					{% endif %}
@@ -54,7 +54,7 @@
 					{% endfor %}
 					{% if page != nbrePage %}
 						<li class="page-item">
-							<a class="page-link" href="{{ path('personne.list.alls', {page: page + 1, nbre: nbre}) }}">Suivant</a>
+							<a class="page-link" href="{{ path('personne.list.alls', {page: page + 1, nbre: nbre}) }}">{% trans %}Suivant{% endtrans %}</a>
 						</li>
 					{% endif %}
 				</ul>

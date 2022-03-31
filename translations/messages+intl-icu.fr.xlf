@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="SheT6ZA" resname="User not found">
+        <source>User not found</source>
+        <target>Utilisateur non trouvé</target>
+      </trans-unit>
+      <trans-unit id="Obc3DzC" resname="Age">
+        <source>Age</source>
+        <target>Age</target>
+      </trans-unit>
+      <trans-unit id="RcG.4Nu" resname="List people in BDD">
+        <source>List people in BDD</source>
+        <target>_Liste des personnes en BDD</target>
+      </trans-unit>
+      <trans-unit id="pXsIpIC" resname="Previous">
+        <source>Previous</source>
+        <target>Précédent</target>
+      </trans-unit>
+      <trans-unit id="3y3zvHE" resname="Suivant">
+        <source>Suivant</source>
+        <target>__Suivant</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

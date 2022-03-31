@@ -16,6 +16,7 @@ use App\Service\MailerService;
 use App\Service\UploaderService;
 use App\Service\PdfService;
 use App\Service\HelpersService;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -25,7 +26,7 @@ use Psr\Log\LoggerInterface;
 
 //factoriser l uri et limiter acces au role pour tout le controler
 #[
-    Route('personne'),
+    Route('personne/{_locale<%app.supported_locales%>}'),
     IsGranted("ROLE_USER")]
 
 class PersonneController extends AbstractController
@@ -34,12 +35,16 @@ class PersonneController extends AbstractController
         private LoggerInterface $logger,
         private HelpersService $helpers,
         private EventDispatcherInterface $dispatcher
+        
     )
     {}
 
     #[Route('/', name: 'personne.list')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine,Request $request): Response
     {
+        $locale = $request->getLocale(); 
+        $request->setlocale($locale);
+
         $repository = $doctrine->getRepository(Personne::class);
 
         $personnes = $repository->findAll();
@@ -136,10 +141,14 @@ class PersonneController extends AbstractController
 
     
     #[Route('/{id<\d+>}', name: 'personne.detail')]
-    public function detail(Personne $personne = null): Response
+    public function detail(Personne $personne = null, TranslatorInterface $translator,Request $request): Response
     {
+        $locale = $request->getLocale(); 
+        $request->setlocale($locale);
+        
         if (!$personne) {
-            $this->addFlash('error',"La personne n'existe pas");
+            $messageEN = $translator->trans('User not found');
+            $this->addFlash('error',$messageEN);
             return $this->redirectToRoute('personne.list.alls');
         }
 
