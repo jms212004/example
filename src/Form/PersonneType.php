@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 class PersonneType extends AbstractType
 {
     public function __construct(TranslatorInterface $translator)
@@ -29,6 +28,7 @@ class PersonneType extends AbstractType
         $builder
             ->add('firstname', NULL, [
                 'label' => $this->translator->trans('Firstname')
+                
             ])
             ->add('name', NULL, [
                 'label' => $this->translator->trans('Name')
