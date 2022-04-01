@@ -149,7 +149,7 @@ Rajouter la methode dans User.php
 
 > Possible d'accéder à cette page en dev alors mettre dans url https://localhost:8000/index.php/_error/403
 
-## traduction 
+## traduction (https://symfony.com/doc/6.0/the-fast-track/fr/28-intl.html#traduire-l-interface)
 - verifier que le module translation est bien installé
 - traduire dans les templates
 - traduire dans les methodes
@@ -160,3 +160,5 @@ Rajouter la methode dans User.php
 -> mettre à jour 
 > php bin/console translation:update --force fr
 (provoque la création des fichiers qui peuvent maintenant être modifiés avec les bons textes)
+
+- placer les lignes de code de récuperation de la variable dans le listener

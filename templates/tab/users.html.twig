@@ -1,25 +1,25 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}
-    Users
+    {% trans %}Users{% endtrans %}
 {% endblock %}
 
 {% block PageTitle %}
-    Users
+    {% trans %}Users{% endtrans %}
 {% endblock %}
 
 
 {% block body %}
 {{ include('fragments/date-jour.html.twig')}}
     <div class="alert alert-warning">
-        <a href="{{ path('tab', {nb : 7 }) }}"> Stats Table</a>
+        <a href="{{ path('tab', {nb : 7 }) }}"> {% trans %}Statistics Table</a>
     </div>
 <table class="table">
     <tr class="table-active">
-        <td>tname</td>
-        <td>Name</td>
-        <td>Age</td>
-        <td>Message</td>
+        <td>{% trans %}tname{% endtrans %}</td>
+        <td>{% trans %}Name{% endtrans %}</td>
+        <td>{% trans %}Age{% endtrans %}</td>
+        <td>{% trans %}Message{% endtrans %}</td>
     </tr>
     {% for user in users %}
     <tr class="table-{% if loop.index is odd %}danger{% else %}warning{% endif %}">

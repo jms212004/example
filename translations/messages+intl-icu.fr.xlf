@@ -15,15 +15,151 @@
       </trans-unit>
       <trans-unit id="RcG.4Nu" resname="List people in BDD">
         <source>List people in BDD</source>
-        <target>_Liste des personnes en BDD</target>
+        <target>Liste des personnes en BDD</target>
       </trans-unit>
       <trans-unit id="pXsIpIC" resname="Previous">
         <source>Previous</source>
         <target>Précédent</target>
       </trans-unit>
-      <trans-unit id="3y3zvHE" resname="Suivant">
-        <source>Suivant</source>
-        <target>__Suivant</target>
+      <trans-unit id="WcESazw" resname="List people">
+        <source>List people</source>
+        <target>Liste des personnes</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target>Suivant</target>
+      </trans-unit>
+      <trans-unit id="NO3pk7." resname="Tableau Users">
+        <source>Tableau Users</source>
+        <target>Tableau des Utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="lSJZncB" resname="Tableau users">
+        <source>Tableau users</source>
+        <target>Tableau des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="Q8zmwI9" resname="Number notes :">
+        <source>Number notes :</source>
+        <target>Nombre de notes :</target>
+      </trans-unit>
+      <trans-unit id="fMUyC4J" resname="Note min :">
+        <source>Note min :</source>
+        <target>Note min :</target>
+      </trans-unit>
+      <trans-unit id="VECqUwi" resname="Note max :">
+        <source>Note max :</source>
+        <target>Note max :</target>
+      </trans-unit>
+      <trans-unit id="U4x0ELM" resname="List user">
+        <source>List user</source>
+        <target>Liste des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="oMDv_ET" resname="Page add personne">
+        <source>Page add personne</source>
+        <target>Page pour ajouter une personne</target>
+      </trans-unit>
+      <trans-unit id="sHat0Hq" resname="successful update">
+        <source>successful update</source>
+        <target>Mise à jour réussie</target>
+      </trans-unit>
+      <trans-unit id="E_Jsmlt" resname="successful delete">
+        <source>successful delete</source>
+        <target>Suppression réussie</target>
+      </trans-unit>
+      <trans-unit id="0k3bIAs" resname="the person doesn't exist">
+        <source>the person doesn't exist</source>
+        <target>Le personne n'existe pas</target>
+      </trans-unit>
+      <trans-unit id="0FJ_Sz1" resname="Logout">
+        <source>Logout</source>
+        <target>Déconnexion</target>
+      </trans-unit>
+      <trans-unit id="nWMiwfT" resname="Login">
+        <source>Login</source>
+        <target>Identification</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>Enregistrement</target>
+      </trans-unit>
+      <trans-unit id="cOoZg8m" resname="Core">
+        <source>Core</source>
+        <target>Centre</target>
+      </trans-unit>
+      <trans-unit id="kEbaFq6" resname="Pages">
+        <source>Pages</source>
+        <target>Pages</target>
+      </trans-unit>
+      <trans-unit id="7rcURCR" resname="User table">
+        <source>User table</source>
+        <target>Tableau des utilisateurs</target>
+      </trans-unit>
+      <trans-unit id="N6Owkac" resname="User add">
+        <source>User add</source>
+        <target>Ajouter un utilisateur</target>
+      </trans-unit>
+      <trans-unit id="FxpF6w4" resname="Personnes">
+        <source>Personnes</source>
+        <target>Personnes</target>
+      </trans-unit>
+      <trans-unit id="oN1wt5w" resname="Add personne">
+        <source>Add personne</source>
+        <target>Rajouter une personne</target>
+      </trans-unit>
+      <trans-unit id="hMHI7uM" resname="When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.">
+        <source>When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</source>
+        <target>__When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</target>
+      </trans-unit>
+      <trans-unit id="kayN18P" resname="Page Title">
+        <source>Page Title</source>
+        <target>Titre de page</target>
+      </trans-unit>
+      <trans-unit id="ZHz6kbI" resname="Firstname">
+        <source>Firstname</source>
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit id="3NHVIj9" resname="Name">
+        <source>Name</source>
+        <target>Nom de famille</target>
+      </trans-unit>
+      <trans-unit id="d1tb_WR" resname="Created at">
+        <source>Created at</source>
+        <target>Création le</target>
+      </trans-unit>
+      <trans-unit id="L1xEImJ" resname="Update at">
+        <source>Update at</source>
+        <target>Mise à jour le</target>
+      </trans-unit>
+      <trans-unit id="4mfTQ4I" resname="Profil">
+        <source>Profil</source>
+        <target>Profile</target>
+      </trans-unit>
+      <trans-unit id="Km9Kxic" resname="Hobbies">
+        <source>Hobbies</source>
+        <target>Loisirs</target>
+      </trans-unit>
+      <trans-unit id="rWF6D91" resname="Job">
+        <source>Job</source>
+        <target>Travail</target>
+      </trans-unit>
+      <trans-unit id="0BARryf" resname="Your profil image - only image">
+        <source>Your profil image - only image</source>
+        <target>Votre image pour votre profile - image uniquement</target>
+      </trans-unit>
+      <trans-unit id="acVpEs4" resname="You are logged in as">
+        <source>You are logged in as</source>
+        <target>Vous êtes connecté en tant que</target>
+      </trans-unit>
+      <trans-unit id="dDUw20Q" resname="Please sign in">
+        <source>Please sign in</source>
+        <target>Merci de vous identifier</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Courriel</target>
+      </trans-unit>
+      <trans-unit id="588_9PF" resname="Password">
+        <source>Password</source>
+        <target>Mot de passe</target>
       </trans-unit>
     </body>
   </file>

@@ -24,4 +24,12 @@ class UserListener
     public function logKernelRequest(KernelEvent $event){
         dd($event->getRequest());
     }
+
+    public function onKernelRequest(RequestEvent $event)
+    {
+        $request = $event->getRequest();
+
+        // some logic to determine the $locale
+        $request->setLocale($locale);
+    }
 }

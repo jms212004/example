@@ -1,11 +1,11 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}
-    Tableau Users
+    {% trans %}Tableau Users{% endtrans %}
 {% endblock %}
 
 {% block PageTitle %}
-    Tableau users
+    {% trans %}Tableau users{% endtrans %}
 {% endblock %}
 
 {% block body %}
@@ -17,9 +17,9 @@
     {% endfor %}
 </table>
 <div class='alert alert-info'>
-    <p>Nombre de notes : {{notes | length }}
-    <p>Note min : {{ min(notes) }}
-    <p>Note max : {{ max(notes) }}
+    <p>{% trans %}Number notes : {% endtrans %}{{notes | length }}
+    <p>{% trans %}Note min : {% endtrans %}{{ min(notes) }}
+    <p>{% trans %}Note max : {% endtrans %}{{ max(notes) }}
 </div>
 <img src="{{ asset('asset/images/') ~ path | defaultImage }}" alt="">
 

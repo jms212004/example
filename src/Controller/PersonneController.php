@@ -34,17 +34,16 @@ class PersonneController extends AbstractController
     public function __construct(
         private LoggerInterface $logger,
         private HelpersService $helpers,
-        private EventDispatcherInterface $dispatcher
+        private EventDispatcherInterface $dispatcher,
+        private TranslatorInterface $translator
         
     )
     {}
 
     #[Route('/', name: 'personne.list')]
-    public function index(ManagerRegistry $doctrine,Request $request): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
-        $locale = $request->getLocale(); 
-        $request->setlocale($locale);
-
+        
         $repository = $doctrine->getRepository(Personne::class);
 
         $personnes = $repository->findAll();
@@ -143,9 +142,6 @@ class PersonneController extends AbstractController
     #[Route('/{id<\d+>}', name: 'personne.detail')]
     public function detail(Personne $personne = null, TranslatorInterface $translator,Request $request): Response
     {
-        $locale = $request->getLocale(); 
-        $request->setlocale($locale);
-        
         if (!$personne) {
             $messageEN = $translator->trans('User not found');
             $this->addFlash('error',$messageEN);
@@ -169,12 +165,14 @@ class PersonneController extends AbstractController
         Request $request,
         UploaderService $uploaderService,
         MailerService $mailer,
+        TranslatorInterface $translator
         ): Response
     {
         // droit acces uniquement a admin
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // initialisation du texte du message a afficher
-        $message = " a été mis à jour avec succès";
+        $message = $translator->trans("successful update");
+        
         $newPersonne = false;
         // si id retourné ne remonter aucun personne de la bDD
         //alors on considère la création d'un personne
@@ -206,7 +204,7 @@ class PersonneController extends AbstractController
                     $personne->setImage($uploaderService->uploadFile($photo, $directory));
                 }
                 if ($newPersonne) {
-                    $message = " a été créé avec succès";
+                    $message = $translator->trans("successful update");
                     $personne->setCreatedBy($this->getUser());
                     //dd($helpers->getUser);
                 }
@@ -249,7 +247,11 @@ class PersonneController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'personne.delete')]
-    public function deletePersonne(Personne $personne = null, ManagerRegistry $doctrine):RedirectResponse {
+    public function deletePersonne(
+        Personne $personne = null, 
+        ManagerRegistry $doctrine,
+        TranslatorInterface $translator
+        ):RedirectResponse {
         // droit acces uniquement a admin
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         // Récupérer la personne
@@ -260,8 +262,12 @@ class PersonneController extends AbstractController
             $manager->remove($personne);
             // Exécuter la transacition
             $manager->flush();
-            $this->addFlash('success', "La personne a été supprimé avec succès");
+            $message = $translator->trans("successful delete");
+                    
+            $this->addFlash('success', $message);
         } else {
+            $message = $translator->trans("the person doesn't exist");
+
             //Sinon  retourner un flashMessage d'erreur
             $this->addFlash('error', "Personne inexistante");
         }
@@ -270,7 +276,13 @@ class PersonneController extends AbstractController
 
 
     #[route('/update/{id}/{name}/{firstname}/{age}',name:'personne.update')]
-    public function updatePersonne(Personne $personne = null,ManagerRegistry $doctrine,$name,$firstname,$age) {
+    public function updatePersonne(
+        Personne $personne = null,
+        ManagerRegistry $doctrine,
+        TranslatorInterface $translator,
+        $name,
+        $firstname,
+        $age) {
         // verifier que la personne existe
         if ($personne) {
             $personne->setName($name);
@@ -281,11 +293,13 @@ class PersonneController extends AbstractController
             $manager->persist($personne);
 
             $manager->flush();
-            $this->addFlash('success', "La personne a été mise à jour avec succès");
+            $message = $translator->trans("successful update");
+            $this->addFlash('success', $message);
 
         } else {
             //Sinon  retourner un flashMessage d'erreur
-            $this->addFlash('error', "Personne inexistante");
+            $message = $translator->trans("the person doesn't exist");
+            $this->addFlash('error', $message);
         }
         return $this->redirectToRoute('personne.list.alls');
     }

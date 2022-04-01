@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 //factoriser l uri et limiter acces au role pour tout le controler
 #[
-    Route('tab'),
+    Route('tab/{_locale<%app.supported_locales%>}'),
     IsGranted("ROLE_ADMIN")]
 class TabController extends AbstractController
 {

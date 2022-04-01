@@ -14,19 +14,36 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 class PersonneType extends AbstractType
 {
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstname')
-            ->add('name')
-            ->add('age')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('firstname', NULL, [
+                'label' => $this->translator->trans('Firstname')
+            ])
+            ->add('name', NULL, [
+                'label' => $this->translator->trans('Name')
+            ])
+            ->add('age', NULL, [
+                'label' => $this->translator->trans('Age')
+            ])
+            ->add('createdAt', NULL, [
+                'label' => $this->translator->trans('Created at')
+            ])
+            ->add('updatedAt', NULL, [
+                'label' => $this->translator->trans('Update at')
+            ])
             ->add('profile', EntityType::class, [
+                'label' => $this->translator->trans('Profil'),
                 'expanded' => false,
                 'required' => false,
                 'class' => Profile::class,
@@ -36,6 +53,7 @@ class PersonneType extends AbstractType
                 ]
             ])
             ->add('hobbies', EntityType::class, [
+                'label' => $this->translator->trans('Hobbies'),
                 'expanded' => false,
                 'class' => Hobby::class,
                 'multiple' => true,
@@ -50,6 +68,7 @@ class PersonneType extends AbstractType
                 ]
             ])
             ->add('job', EntityType::class, [
+                'label' => $this->translator->trans('Job'),
                 'required' => false,
                 'multiple' => false,
                 'class' => Job::class,
@@ -59,7 +78,7 @@ class PersonneType extends AbstractType
                 }
             ])
             ->add('photo', FileType::class, [
-                'label' => 'Votre image de profil (Des fichiers images uniquement)',
+                'label' => $this->translator->trans('Your profil image - only image'),
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file
@@ -76,7 +95,7 @@ class PersonneType extends AbstractType
                             'image/png',
                             'image/jpg',
                         ],
-                        'mimeTypesMessage' => 'Merci de déposer un fichier image valide',
+                        'mimeTypesMessage' => $this->translator->trans('Merci de déposer un fichier image valide'),
                     ])
                 ],
             ])

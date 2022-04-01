@@ -1,14 +1,15 @@
 {% extends 'template.html.twig' %}
 
 {% block PageTitle %}
-	List people
+	{% trans %} List people {% endtrans %}
 {% endblock %}
 
 {% block title %}
-	{% trans %} List people in BDD{% endtrans %}
+	{% trans %} List people in BDD {% endtrans %}
 {% endblock %}
 
 {% block body %}
+
 	<div class="row">
 		{% for personne in personnes %}
 			<div class="card" style="width: 18rem;">
@@ -54,7 +55,7 @@
 					{% endfor %}
 					{% if page != nbrePage %}
 						<li class="page-item">
-							<a class="page-link" href="{{ path('personne.list.alls', {page: page + 1, nbre: nbre}) }}">{% trans %}Suivant{% endtrans %}</a>
+							<a class="page-link" href="{{ path('personne.list.alls', {page: page + 1, nbre: nbre}) }}">{% trans %}Next{% endtrans %}</a>
 						</li>
 					{% endif %}
 				</ul>
