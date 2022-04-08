@@ -2,26 +2,38 @@
 Utilisation de tutoriel
 
 ## Lancer le serveur en dev symfony
+
+````
 cd symfony/example/ # correspond au répertoire contenant le projet à lancer
 symfony server:start
 
+````
 ## Utilisation de l'IDE Visual Studio Code
 ### Extensions rajoutées
+ 
+````
  ESLint; Git History; Lorem ipsum; MYSQL; PHP Intelephense; Symfony code ...; Twig;Class autocomplete for HTML;
 
+````
 ## installation Symfony sous ubuntu
 https://www.osradar.com/install-symfony-ubuntu-20-04/
 
  ## Commandes Symfony
- $ php bin/console make:controller
+
+````
+$ php bin/console make:controller
  > BlogController
 
+````
 ## boostrap (https://www.npmjs.com/package/bootstrap)
 ### https://getbootstrap.com/docs/5.1/components/
+
+````
 > mkdir public/assets
 $../public> npm init
 $> npm i bootstrap
 
+````
 ## config gmail
 https://www.google.com/settings/security/lesssecureapps
 
@@ -35,7 +47,6 @@ cd symfony/
 wget https://get.symfony.com/cli/installer -O - | bash
 export PATH="$HOME/.symfony/bin:$PATH".
 
-````
 symfony new example --full
 cd symfony/example/
 symfony server:start
@@ -80,14 +91,21 @@ composer require theofidry/alice-data-fixtures --dev
 composer require fzaninotto/faker
 composer require fakerphp/faker
 composer require dompdf/dompdf
+````
 
 
 ## securite
+````
+
 composer require security
 symfony console make:user
 symfony console make:auth
 symfony console doctrine:fixtures:load --group=user --append
 symfony console debug:config security
+````
 
 ## securité : enregistrer un user
+````
+
 symfony console make:registration-form
+````
