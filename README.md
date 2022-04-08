@@ -27,6 +27,7 @@ https://www.google.com/settings/security/lesssecureapps
 
 
 ## commandes utilisées
+````
 sudo apt install symfony
 sudo apt symfony
 mkdir symfony
@@ -34,6 +35,7 @@ cd symfony/
 wget https://get.symfony.com/cli/installer -O - | bash
 export PATH="$HOME/.symfony/bin:$PATH".
 
+````
 symfony new example --full
 cd symfony/example/
 symfony server:start
